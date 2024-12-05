@@ -50,6 +50,7 @@ export default async function startMirage(owner, { env, makeServer } = {}) {
     server.logging = true;
   }
   if (server.start) {
+    console.log('start')
     await server.start();
   }
   return server;
