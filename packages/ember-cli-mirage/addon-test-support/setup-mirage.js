@@ -11,7 +11,7 @@ import { settled } from '@ember/test-helpers';
   @hide
 */
 export default function setupMirage(hooks = self, options) {
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     if (!this.owner) {
       throw new Error(
         'You must call one of the ember-qunit setupTest(),' +
@@ -20,7 +20,7 @@ export default function setupMirage(hooks = self, options) {
       );
     }
 
-    this.server = startMirage(this.owner, options);
+    this.server = await startMirage(this.owner, options);
   });
 
   hooks.afterEach(function () {

@@ -9,7 +9,7 @@ import { assert } from '@ember/debug';
 
   @hide
 */
-export default function startMirage(owner, { env, makeServer } = {}) {
+export default async function startMirage(owner, { env, makeServer } = {}) {
   if (!env || !makeServer) {
     if (!owner) {
       throw new Error('You must pass `owner` to startMirage()');
@@ -42,13 +42,15 @@ export default function startMirage(owner, { env, makeServer } = {}) {
     makeServer.length > 0,
   );
 
-  let server = makeServer(options);
+  let server = await makeServer(options);
   if (
     typeof location !== 'undefined' &&
     location.search.indexOf('mirageLogging') !== -1
   ) {
     server.logging = true;
   }
-
+  if (server.start) {
+    await server.start();
+  }
   return server;
 }
